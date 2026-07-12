@@ -1,27 +1,37 @@
+import json
 
-file_name = '/home/firas/private-projects/task-tracker-practice/python/content.txt'
+file_name = '/home/firas/private-projects/task-tracker-practice/python/content.json'
 
 def get_tasks():
     try:
         with open(file_name) as file:
-            return file.read().splitlines()
+            return json.load(file)
     except:
         FileNotFoundError
 
 def add_task(task):
     task_id = 1
-    tasks = get_tasks()
+    tasks = get_tasks() if get_tasks() else []
     if tasks:
+        print(f'tasks1: {tasks}')
+        task_id = max((t["id"] for t in tasks), default=0) + 1
         print(f'tasks: {tasks}')
-        for t in tasks:
-            element = t.split(' - ', 1)
-            id = int(element[0])
-            task_id = id + 1
+        add_new_task(tasks, task, task_id)
     else:
-        task_id
-    with open(file_name, 'a') as file:
-        entry = f'{task_id} - {task} - pending\n'
-        file.write(entry)
+        tasks = []
+        add_new_task(tasks, task, task_id)
+    
+def add_new_task(tasks, task, task_id):
+    with open(file_name, 'w') as file:
+        print(f'tasks2: {tasks}')
+        entry = {
+            "id": task_id, 
+            "task": task,
+            "status": 'pending'
+        }
+        tasks.append(entry)
+        print(f'new list: {tasks}')
+        json.dump(tasks, file)
         print(f'task added: {entry}')
 
 def update_task(task_id, new_task):
