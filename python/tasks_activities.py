@@ -20,7 +20,7 @@ def add_task(task):
     else:
         task_id
     with open(file_name, 'a') as file:
-        entry = f'{task_id} - {task}\n'
+        entry = f'{task_id} - {task} - pending\n'
         file.write(entry)
         print(f'task added: {entry}')
 
@@ -37,11 +37,6 @@ def update_task(task_id, new_task):
             tasks[tasks.index(task)] = updated_task
             update_task_list(tasks)
     print(f'tasks: {tasks}')
-            
-def update_task_list(tasks):
-    with open(file_name, 'w') as file:
-        content = '\n'.join(tasks)
-        file.write(content)
 
 def delete_task(task_id):
     tasks = get_tasks()
@@ -54,5 +49,47 @@ def delete_task(task_id):
             update_task_list(tasks)
     print(f'tasks: {tasks}')
 
+def mark_in_progress(task_id):
+    tasks = get_tasks()
+    for task in tasks:
+        id = int(task.split(' - ')[0])
+        taskstr = task.split(' - ')[1]
+        if task_id == id:
+            updated_task = f'{id} - {taskstr} - in-progress'
+            tasks[tasks.index(task)] = updated_task
+            update_task_list(tasks)
+    print(f'tasks: {tasks}')
 
+def mark_completed(task_id):
+    tasks = get_tasks()
+    for task in tasks:
+        id = int(task.split(' - ')[0])
+        taskstr = task.split(' - ')[1]
+        if task_id == id:
+            updated_task = f'{id} - {taskstr} - done'
+            tasks[tasks.index(task)] = updated_task
+            update_task_list(tasks)
+    print(f'tasks: {tasks}')
 
+def filter_incomplete_tasks():
+    tasks = get_tasks()
+    filtered_tasks = []
+    for task in tasks:
+        status = task.split(' - ')[2]
+        if status not in ['done']:
+            filtered_tasks.append(task)
+    return filtered_tasks
+
+def filter_completed_tasks():
+    tasks = get_tasks()
+    filtered_tasks = []
+    for task in tasks:
+        status = task.split(' - ')[2]
+        if status in ['done']:
+            filtered_tasks.append(task)
+    return filtered_tasks
+
+def update_task_list(tasks):
+    with open(file_name, 'w') as file:
+        content = '\n'.join(tasks)
+        file.write(content)
