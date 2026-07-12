@@ -24,3 +24,8 @@ if __name__ == '__main__':
         task_id = int(input())
         requested_task = input("enter the new task: ")
         tasks.update_task(task_id, requested_task)
+    elif choice == list[3]:
+        print(f'tasks retrieved:\n{task_list}')
+        print("select the id of the task you want to delete:")
+        task_id = int(input())
+        tasks.delete_task(task_id)

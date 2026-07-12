@@ -4,7 +4,7 @@ file_name = '/home/firas/private-projects/task-tracker-practice/python/content.t
 def get_tasks():
     try:
         with open(file_name) as file:
-            return file.read()
+            return file.read().splitlines()
     except:
         FileNotFoundError
 
@@ -25,7 +25,7 @@ def add_task(task):
         print(f'task added: {entry}')
 
 def update_task(task_id, new_task):
-    tasks = get_tasks().splitlines()
+    tasks = get_tasks()
     print(f'tasks: {tasks}')
     updated_task = ''
     for task in tasks:
@@ -42,3 +42,17 @@ def update_task_list(tasks):
     with open(file_name, 'w') as file:
         content = '\n'.join(tasks)
         file.write(content)
+
+def delete_task(task_id):
+    tasks = get_tasks()
+    print(f'tasks: {tasks}')
+    for task in tasks:
+        id = int(task.split(' - ')[0])
+        if task_id == id:
+            tasks.remove(task)
+            print('removed a task')
+            update_task_list(tasks)
+    print(f'tasks: {tasks}')
+
+
+
