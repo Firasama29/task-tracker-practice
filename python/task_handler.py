@@ -12,9 +12,15 @@ choice = input()
 list = ['1', '2', '3', '4']
 
 if __name__ == '__main__':
+    task_list = tasks.get_tasks()
     if choice == list[0]:
         task = input("add a task: ")
         tasks.add_task(task)
     elif choice == list[1]:
-        task_list = tasks.get_tasks()
         print(f'tasks retrieved:\n{task_list}')
+    elif choice == list[2]:
+        print(f'tasks retrieved:\n{task_list}')
+        print("select the id of the task you want to update:")
+        task_id = int(input())
+        requested_task = input("enter the new task: ")
+        tasks.update_task(task_id, requested_task)
