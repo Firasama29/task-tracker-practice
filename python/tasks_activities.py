@@ -20,40 +20,22 @@ def add_task(task):
     else:
         tasks = []
         add_new_task(tasks, task, task_id)
-    
-def add_new_task(tasks, task, task_id):
-    with open(file_name, 'w') as file:
-        print(f'tasks2: {tasks}')
-        entry = {
-            "id": task_id, 
-            "task": task,
-            "status": 'pending'
-        }
-        tasks.append(entry)
-        print(f'new list: {tasks}')
-        json.dump(tasks, file)
-        print(f'task added: {entry}')
 
 def update_task(task_id, new_task):
-    tasks = get_tasks()
-    print(f'tasks: {tasks}')
-    updated_task = ''
+    tasks = get_tasks() if get_tasks() else []
     for task in tasks:
-        id = int(task.split(' - ')[0])
-        taskstr = task.split(' - ')[1]
-        if task_id == id:
-            updated_task = f'{id} - {taskstr.replace(taskstr, new_task)}'
-            print(f'updated_task inside loop: {updated_task}')
-            tasks[tasks.index(task)] = updated_task
+        print(f"task: {task}")
+        if task_id == int(task["id"]):
+            task["task"] = new_task
             update_task_list(tasks)
+            break
     print(f'tasks: {tasks}')
 
 def delete_task(task_id):
     tasks = get_tasks()
     print(f'tasks: {tasks}')
     for task in tasks:
-        id = int(task.split(' - ')[0])
-        if task_id == id:
+        if task_id == int(task["id"]):
             tasks.remove(task)
             print('removed a task')
             update_task_list(tasks)
@@ -62,22 +44,16 @@ def delete_task(task_id):
 def mark_in_progress(task_id):
     tasks = get_tasks()
     for task in tasks:
-        id = int(task.split(' - ')[0])
-        taskstr = task.split(' - ')[1]
-        if task_id == id:
-            updated_task = f'{id} - {taskstr} - in-progress'
-            tasks[tasks.index(task)] = updated_task
+        if task_id == int(task["id"]):
+            task['status'] = 'in-progress'
             update_task_list(tasks)
     print(f'tasks: {tasks}')
 
 def mark_completed(task_id):
     tasks = get_tasks()
     for task in tasks:
-        id = int(task.split(' - ')[0])
-        taskstr = task.split(' - ')[1]
-        if task_id == id:
-            updated_task = f'{id} - {taskstr} - done'
-            tasks[tasks.index(task)] = updated_task
+        if task_id == int(task["id"]):
+            task['status'] = 'done'
             update_task_list(tasks)
     print(f'tasks: {tasks}')
 
@@ -85,7 +61,7 @@ def filter_incomplete_tasks():
     tasks = get_tasks()
     filtered_tasks = []
     for task in tasks:
-        status = task.split(' - ')[2]
+        status = task['status']
         if status not in ['done']:
             filtered_tasks.append(task)
     return filtered_tasks
@@ -94,12 +70,20 @@ def filter_completed_tasks():
     tasks = get_tasks()
     filtered_tasks = []
     for task in tasks:
-        status = task.split(' - ')[2]
+        status = task['status']
         if status in ['done']:
             filtered_tasks.append(task)
     return filtered_tasks
 
+def add_new_task(tasks, task, task_id):
+    with open(file_name, 'w') as file:
+        print(f'tasks2: {tasks}')
+        entry = {"id": task_id, "task": task, "status": 'pending'}
+        tasks.append(entry)
+        print(f'new list: {tasks}')
+        json.dump(tasks, file, indent=2)
+        print(f'task added: {entry}')
+
 def update_task_list(tasks):
     with open(file_name, 'w') as file:
-        content = '\n'.join(tasks)
-        file.write(content)
+        json.dump(tasks, file, indent=2)
