@@ -2,23 +2,7 @@ import python.tasks_activities as tasks
 import sys
 from python.exceptions import TaskNotFoundError, InvalidTaskIdError
 
-
 command = sys.argv[1]
-
-activity = 'Add a new task: 1\n' \
-'View all tasks: 2\n' \
-'Update a task: 3\n' \
-'Delete a task: 4\n' \
-'Mark as in-progress: 5\n' \
-'Mark as completed: 6\n' \
-'Check pending/in-progress tasks: 7\n' \
-'Check completed tasks: 8'
-
-# print(f"choose a task:\n{activity}")
-
-# choice = input()
-
-# list = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
 def read_task_id():
     try:
