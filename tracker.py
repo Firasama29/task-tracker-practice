@@ -10,8 +10,20 @@ def read_task_id():
     except ValueError:
         raise InvalidTaskIdError("task id must be a number")
 
+def show_commands():
+	print('add		    -		add a command\n'
+           'list        -       view all tasks\n'
+           'update      -       update tasks\n'
+           'delete      -       delete tasks\n'
+           'progress    -       mark tasks as in-progress\n'
+           'completed   -       mark tasks as done\n'
+           'pending     -       view all incomplete tasks\n'
+           'done        -       view all completed tasks')
+
 if __name__ == '__main__':
     task_list = tasks.get_tasks()
+    if command == 'help':
+        show_commands()
     if command == "add":
         task = input("add a task: ")
         tasks.add_task(task)
