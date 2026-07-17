@@ -1,16 +1,16 @@
-package src.main.java;
+package main.java;
 
 import java.util.List;
 import java.util.Scanner;
 
-import static src.main.java.TaskActivities.addTask;
-import static src.main.java.TaskActivities.deleteTask;
-import static src.main.java.TaskActivities.filterCompletedTasks;
-import static src.main.java.TaskActivities.filterIncompleteTasks;
-import static src.main.java.TaskActivities.getTasks;
-import static src.main.java.TaskActivities.markCompleted;
-import static src.main.java.TaskActivities.markInprogress;
-import static src.main.java.TaskActivities.updateTask;
+import static main.java.TaskActivities.addTask;
+import static main.java.TaskActivities.deleteTask;
+import static main.java.TaskActivities.filterCompletedTasks;
+import static main.java.TaskActivities.filterIncompleteTasks;
+import static main.java.TaskActivities.getTasks;
+import static main.java.TaskActivities.markCompleted;
+import static main.java.TaskActivities.markInprogress;
+import static main.java.TaskActivities.updateTask;
 
 public class Main {
 
