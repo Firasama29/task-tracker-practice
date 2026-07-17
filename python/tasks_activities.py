@@ -59,22 +59,10 @@ def mark_completed(task_id):
             print(f'updated task: {task}')
 
 def filter_incomplete_tasks():
-    tasks = get_tasks()
-    filtered_tasks = []
-    for task in tasks:
-        status = task['status']
-        if status not in ['done']:
-            filtered_tasks.append(task)
-    return filtered_tasks
+    return [task for task in get_tasks() if task['status'] in ['pending', 'in-progress']]
 
 def filter_completed_tasks():
-    tasks = get_tasks()
-    filtered_tasks = []
-    for task in tasks:
-        status = task['status']
-        if status in ['done']:
-            filtered_tasks.append(task)
-    return filtered_tasks
+    return [task for task in get_tasks() if task['status'] == 'done']
 
 def add_new_task(tasks, task, task_id):
     with open(file_name, 'w') as file:
