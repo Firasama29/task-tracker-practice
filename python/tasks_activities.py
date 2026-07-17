@@ -59,7 +59,7 @@ def mark_completed(task_id):
             print(f'updated task: {task}')
 
 def filter_incomplete_tasks():
-    tasks = get_tasks() if get_tasks() else []
+    tasks = get_tasks()
     filtered_tasks = []
     for task in tasks:
         status = task['status']
@@ -68,7 +68,7 @@ def filter_incomplete_tasks():
     return filtered_tasks
 
 def filter_completed_tasks():
-    tasks = get_tasks() if get_tasks() else []
+    tasks = get_tasks()
     filtered_tasks = []
     for task in tasks:
         status = task['status']
